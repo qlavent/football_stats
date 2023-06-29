@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "857127146995",
+    "project_id": "football-tracker-67669",
+    "storage_bucket": "football-tracker-67669.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:857127146995:android:767deb11161ee0e207ee86",
+        "android_client_info": {
+          "package_name": "com.example.football_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "857127146995-kkn4spgpclunftnqkm9mnl3kk0oeaalh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnFlgkrifwCcwLk1cp-Ar_JOmO6axeQls"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "857127146995-kkn4spgpclunftnqkm9mnl3kk0oeaalh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "857127146995-pqs4tcsnn92umug48fl1om548t78a3bv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.footballTracker"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

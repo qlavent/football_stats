@@ -1,11 +1,18 @@
-//import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:football_tracker/games/games.dart';
 import 'package:football_tracker/stats/stats.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(const MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -104,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
       page = const StatsPage();
     }
     return Scaffold(
-      appBar: AppBar(title: Text("$selectedPage")),
+      appBar: AppBar(title: const Text("Mvc Den Derde Helft")),
       body: Center(
         child: page,
       ),

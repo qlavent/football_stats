@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class GamesPage extends StatefulWidget {
@@ -8,18 +9,154 @@ class GamesPage extends StatefulWidget {
 }
 
 class _GamesPageState extends State<GamesPage> {
+  List<dynamic> games = <dynamic>[];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const Text("page 1"),
+      body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+        stream: FirebaseFirestore.instance
+            .collection('teams')
+            .doc('mvc den derde helft')
+            .snapshots(),
+        builder: (
+          BuildContext buildContext,
+          AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot,
+        ) {
+          if (snapshot.connectionState == ConnectionState.active &&
+              snapshot.data != null) {
+            Map<String, dynamic>? data = snapshot.data!.data();
+            if (data != null) {
+              games = data["games"];
+
+              return Scrollbar(
+                child: ListView(
+                  children: [
+                    for (int i = 0; i < games.length; i++)
+                      Card(
+                        child: SizedBox(
+                          height: MediaQuery.of(context).size.height / 5,
+                          width: MediaQuery.of(context).size.width / 1.5,
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width / 20,
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width / 3,
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              80,
+                                    ),
+                                    Container(
+                                      width:
+                                          MediaQuery.of(context).size.width / 8,
+                                      height:
+                                          MediaQuery.of(context).size.width / 8,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Theme.of(context)
+                                              .primaryColorDark,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              300,
+                                        ),
+                                        shape: BoxShape.circle,
+                                        image: const DecorationImage(
+                                          image: AssetImage("images/logo.png"),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    const Text("mvc Den Derde Helft"),
+                                  ],
+                                ),
+                              ),
+                              const Spacer(),
+                              Text(
+                                "${(games[i])['own score'].toString()} - ${(games[i])['opponent score'].toString()}",
+                                style: TextStyle(
+                                  fontSize:
+                                      MediaQuery.of(context).size.width / 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              const Spacer(),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width / 3,
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              80,
+                                    ),
+                                    Container(
+                                      width:
+                                          MediaQuery.of(context).size.width / 8,
+                                      height:
+                                          MediaQuery.of(context).size.width / 8,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Theme.of(context)
+                                              .primaryColorDark,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              300,
+                                        ),
+                                        shape: BoxShape.circle,
+                                        image: const DecorationImage(
+                                          image: AssetImage("images/logo.png"),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    Text((games[i])['opponent'].toString()),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width / 20,
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                  ],
+                ),
+              );
+            }
+          }
+
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Text(
+                "Klassen",
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width / 40,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).primaryColorDark,
+                ),
+              ),
+            ),
+          );
+        },
+      ),
       floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.red,
-          onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => const Placeholder()));
-          },
-          child: const Icon(Icons.add),
-        ),
+        backgroundColor: Colors.red,
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const Placeholder()));
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }
