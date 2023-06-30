@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:football_tracker/games/add_game.dart';
+
+import 'match.dart';
 
 class GamesPage extends StatefulWidget {
   const GamesPage({super.key});
@@ -33,101 +36,118 @@ class _GamesPageState extends State<GamesPage> {
                 child: ListView(
                   children: [
                     for (int i = 0; i < games.length; i++)
-                      Card(
-                        child: SizedBox(
-                          height: MediaQuery.of(context).size.height / 5,
-                          width: MediaQuery.of(context).size.width / 1.5,
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width / 20,
-                              ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width / 3,
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height /
-                                              80,
-                                    ),
-                                    Container(
-                                      width:
-                                          MediaQuery.of(context).size.width / 8,
-                                      height:
-                                          MediaQuery.of(context).size.width / 8,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: Theme.of(context)
-                                              .primaryColorDark,
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              300,
-                                        ),
-                                        shape: BoxShape.circle,
-                                        image: const DecorationImage(
-                                          image: AssetImage("images/logo.png"),
-                                          fit: BoxFit.cover,
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MatchPage(
+                                      game: ((games[i])["game"])
+                                          as DocumentReference<
+                                              Map<String, dynamic>>)));
+                        },
+                        child: Card(
+                          child: SizedBox(
+                            height: MediaQuery.of(context).size.height / 5,
+                            width: MediaQuery.of(context).size.width / 1.5,
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width / 20,
+                                ),
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width / 3,
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                80,
+                                      ),
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                8,
+                                        height:
+                                            MediaQuery.of(context).size.width /
+                                                8,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: Theme.of(context)
+                                                .primaryColorDark,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                300,
+                                          ),
+                                          shape: BoxShape.circle,
+                                          image: const DecorationImage(
+                                            image:
+                                                AssetImage("images/logo.png"),
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    const Text("mvc Den Derde Helft"),
-                                  ],
+                                      const Text("mvc Den Derde Helft"),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              const Spacer(),
-                              Text(
-                                "${(games[i])['own score'].toString()} - ${(games[i])['opponent score'].toString()}",
-                                style: TextStyle(
-                                  fontSize:
-                                      MediaQuery.of(context).size.width / 15,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
+                                const Spacer(),
+                                Text(
+                                  "${(games[i])['own score'].toString()} - ${(games[i])['opponent score'].toString()}",
+                                  style: TextStyle(
+                                    fontSize:
+                                        MediaQuery.of(context).size.width / 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
                                 ),
-                              ),
-                              const Spacer(),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width / 3,
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height /
-                                              80,
-                                    ),
-                                    Container(
-                                      width:
-                                          MediaQuery.of(context).size.width / 8,
-                                      height:
-                                          MediaQuery.of(context).size.width / 8,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: Theme.of(context)
-                                              .primaryColorDark,
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              300,
-                                        ),
-                                        shape: BoxShape.circle,
-                                        image: const DecorationImage(
-                                          image: AssetImage("images/logo.png"),
-                                          fit: BoxFit.cover,
+                                const Spacer(),
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width / 3,
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                80,
+                                      ),
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                8,
+                                        height:
+                                            MediaQuery.of(context).size.width /
+                                                8,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: Theme.of(context)
+                                                .primaryColorDark,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                300,
+                                          ),
+                                          shape: BoxShape.circle,
+                                          image: const DecorationImage(
+                                            image:
+                                                AssetImage("images/logo.png"),
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Text((games[i])['opponent'].toString()),
-                                  ],
+                                      Text((games[i])['opponent'].toString()),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width / 20,
-                              ),
-                            ],
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width / 20,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      )
+                      ),
                   ],
                 ),
               );
@@ -153,7 +173,7 @@ class _GamesPageState extends State<GamesPage> {
         backgroundColor: Colors.red,
         onPressed: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const Placeholder()));
+              MaterialPageRoute(builder: (context) => const AddGamePage()));
         },
         child: const Icon(Icons.add),
       ),
