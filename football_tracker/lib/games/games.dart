@@ -13,6 +13,7 @@ class GamesPage extends StatefulWidget {
 
 class _GamesPageState extends State<GamesPage> {
   List<dynamic> games = <dynamic>[];
+  List<dynamic> players = <dynamic>[];
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +32,12 @@ class _GamesPageState extends State<GamesPage> {
             Map<String, dynamic>? data = snapshot.data!.data();
             if (data != null) {
               games = data["games"];
+              players = data["players"];
 
               return Scrollbar(
                 child: ListView(
                   children: [
-                    for (int i = 0; i < games.length; i++)
+                    for (int i = games.length - 1; i >= 0; i--)
                       InkWell(
                         onTap: () {
                           Navigator.push(
@@ -93,14 +95,21 @@ class _GamesPageState extends State<GamesPage> {
                                   ),
                                 ),
                                 const Spacer(),
-                                Text(
-                                  "${(games[i])['own score'].toString()} - ${(games[i])['opponent score'].toString()}",
-                                  style: TextStyle(
-                                    fontSize:
-                                        MediaQuery.of(context).size.width / 15,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
+                                Column(
+                                  children: [
+                                    if((games[i])['finished'])
+                                      const Text("AFGELOPEN"),
+                                    Text(
+                                      "${(games[i])['own score'].toString()} - ${(games[i])['opponent score'].toString()}",
+                                      style: TextStyle(
+                                        fontSize:
+                                            MediaQuery.of(context).size.width /
+                                                15,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 const Spacer(),
                                 SizedBox(
@@ -172,8 +181,10 @@ class _GamesPageState extends State<GamesPage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.red,
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const AddGamePage()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => AddGamePage(players: players)));
         },
         child: const Icon(Icons.add),
       ),
