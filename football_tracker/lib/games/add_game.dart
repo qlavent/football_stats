@@ -35,7 +35,7 @@ class _AddGamePageState extends State<AddGamePage> {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height / 20,
+              height: MediaQuery.of(context).size.height / 70,
             ),
             Text(
               "tegenstander",
@@ -67,10 +67,12 @@ class _AddGamePageState extends State<AddGamePage> {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height / 20,
+              height: MediaQuery.of(context).size.height / 60,
             ),
             const Text("Selecteer spelers"),
             Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 for (int i = 0; i < ((widget.players.length) / 10).floor(); i++)
                   SizedBox(
@@ -147,6 +149,9 @@ class _AddGamePageState extends State<AddGamePage> {
                 ),
                 child: const Text("voeg toe"),
               ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height / 20,
             ),
           ],
         ),
