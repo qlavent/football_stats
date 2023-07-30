@@ -99,6 +99,8 @@ class _GamesPageState extends State<GamesPage> {
                                   children: [
                                     if((games[i])['finished'])
                                       const Text("AFGELOPEN"),
+                                    if(!(games[i])['finished'])
+                                      const Text("  "),
                                     Text(
                                       "${(games[i])['own score'].toString()} - ${(games[i])['opponent score'].toString()}",
                                       style: TextStyle(
@@ -163,18 +165,8 @@ class _GamesPageState extends State<GamesPage> {
             }
           }
 
-          return Center(
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Text(
-                "Klassen",
-                style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.width / 40,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).primaryColorDark,
-                ),
-              ),
-            ),
+          return const Center(
+            child: Text("  "),
           );
         },
       ),
@@ -186,7 +178,7 @@ class _GamesPageState extends State<GamesPage> {
               MaterialPageRoute(
                   builder: (context) => AddGamePage(players: players)));
         },
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add, color: Colors.white,),
       ),
     );
   }

@@ -128,6 +128,7 @@ class _AddGamePageState extends State<AddGamePage> {
                   for (int i = 0; i < selection.length; i++) {
                     if (selection[i]) {
                       Map<String, dynamic> element = {
+                        'number': (widget.players[i])['number'],
                         'name': (widget.players[i])['name'],
                         'player': (widget.players[i])['player']
                       };

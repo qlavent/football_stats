@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:football_tracker/main.dart';
 import 'package:football_tracker/stats/add_player.dart';
-import 'package:adaptive_scrollbar/adaptive_scrollbar.dart';
 
 class StatsPage extends StatefulWidget {
   const StatsPage({super.key});
@@ -21,12 +19,12 @@ class _StatsPageState extends State<StatsPage> {
         title: const Text('Statistieken'),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.red,
         onPressed: () {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => const AddPlayerPage()));
         },
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add, color: Colors.white,),
       ),
       body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
         stream: FirebaseFirestore.instance
@@ -179,18 +177,8 @@ class _StatsPageState extends State<StatsPage> {
             }
           }
 
-          return Center(
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Text(
-                "Klassen",
-                style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.width / 40,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).primaryColorDark,
-                ),
-              ),
-            ),
+          return const Center(
+            child: Text("  "),
           );
         },
       ),

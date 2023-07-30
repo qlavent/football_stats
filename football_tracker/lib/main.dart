@@ -124,10 +124,13 @@ class _MyHomePageState extends State<MyHomePage> {
           padding: EdgeInsets.zero,
           children: [
             const DrawerHeader(
+              margin: EdgeInsets.only(bottom: 2),
+              padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
               decoration: BoxDecoration(
-                color: Colors.blue,
+                
+                color: Colors.red,
               ),
-              child: Text('Drawer Header'),
+              child: Text('Football Tracker',),
             ),
             ListTile(
               title: const Text('Wedstrijden'),
