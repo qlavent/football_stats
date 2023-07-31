@@ -35,7 +35,8 @@ class _AddGoalPageState extends State<AddGoalPage> {
       content: SizedBox(
         width: MediaQuery.of(context).size.width / 1.3,
         height: MediaQuery.of(context).size.height / 1.3,
-        child: Column(
+        child: 
+        Column(
           children: <Widget>[
             const Text("doelpunt toevoegen"),
             SizedBox(

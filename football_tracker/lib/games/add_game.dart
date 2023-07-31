@@ -12,7 +12,7 @@ class AddGamePage extends StatefulWidget {
 class _AddGamePageState extends State<AddGamePage> {
   final TextEditingController firstNameController = TextEditingController();
   List<bool> selection = <bool>[];
-  
+
   @override
   void initState() {
     super.initState();
@@ -22,138 +22,144 @@ class _AddGamePageState extends State<AddGamePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: SizedBox(
+        width: MediaQuery.of(context).size.width / 3,
+        height: MediaQuery.of(context).size.height / 10,
+        child: ElevatedButton(
+          onPressed: () {
+            List<Map<String, dynamic>> toAdd = <Map<String, dynamic>>[];
+            for (int i = 0; i < selection.length; i++) {
+              if (selection[i]) {
+                Map<String, dynamic> element = {
+                  'number': (widget.players[i])['number'],
+                  'name': (widget.players[i])['name'],
+                  'player': (widget.players[i])['player']
+                };
+                toAdd.add(element);
+              }
+            }
+            addGame(firstNameController.text.toString(), toAdd,
+                ownScore: 0, opponentScore: 0);
+            Navigator.pop(context);
+          },
+          style: ButtonStyle(
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+              ),
+            ),
+          ),
+          child: const Text("voeg toe"),
+        ),
+      ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "Voeg een wedstrijd toe",
-              style: TextStyle(
-                fontSize: MediaQuery.of(context).size.width / 15,
-                fontWeight: FontWeight.bold,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                "Voeg een wedstrijd toe",
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width / 15,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 70,
-            ),
-            Text(
-              "tegenstander",
-              style: TextStyle(
-                fontSize: MediaQuery.of(context).size.width / 15,
-                fontWeight: FontWeight.bold,
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 70,
               ),
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width / 2,
-              height: MediaQuery.of(context).size.height / 10,
-              child: TextFormField(
-                autofocus: true,
-                controller: firstNameController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  labelText: 'tegenstander',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
+              Text(
+                "tegenstander",
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width / 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 2,
+                height: MediaQuery.of(context).size.height / 10,
+                child: TextFormField(
+                  autofocus: true,
+                  controller: firstNameController,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: 'tegenstander',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    contentPadding: const EdgeInsets.all(10),
+                    errorStyle: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width / 25,
+                    ),
                   ),
-                  contentPadding: const EdgeInsets.all(10),
-                  errorStyle: TextStyle(
+                  style: TextStyle(
                     fontSize: MediaQuery.of(context).size.width / 25,
                   ),
                 ),
-                style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.width / 25,
-                ),
               ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 60,
-            ),
-            const Text("Selecteer spelers"),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                for (int i = 0; i < ((widget.players.length) / 10).floor(); i++)
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 60,
+              ),
+              const Text("Selecteer spelers"),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (int i = 0;
+                      i < ((widget.players.length) / 10).floor();
+                      i++)
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 3.5,
+                      child: Column(
+                        children: [
+                          for (int k = 0; k < 10; k++)
+                            Row(children: [
+                              Checkbox(
+                                value: selection[10 * i + k],
+                                activeColor: Colors.green,
+                                onChanged: (bool? value) {
+                                  selection[10 * i + k] = value!;
+                                  setState(() {});
+                                },
+                              ),
+                              Text(
+                                  "${(widget.players[10 * i + k])['number']} ${(widget.players[10 * i + k])['name']}"),
+                            ]),
+                        ],
+                      ),
+                    ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 3.5,
                     child: Column(
                       children: [
-                        for (int k = 0; k < 10; k++)
+                        for (int j = 0; j < widget.players.length % 10; j++)
                           Row(children: [
                             Checkbox(
-                              value: selection[10 * i + k],
+                              value: selection[
+                                  ((widget.players.length) / 10).floor() * 10 +
+                                      j],
                               activeColor: Colors.green,
                               onChanged: (bool? value) {
-                                selection[10 * i + k] = value!;
+                                selection[
+                                    ((widget.players.length) / 10).floor() *
+                                            10 +
+                                        j] = value!;
                                 setState(() {});
                               },
                             ),
                             Text(
-                                "${(widget.players[10 * i + k])['number']} ${(widget.players[10 * i + k])['name']}"),
+                                "${(widget.players[((widget.players.length) / 10).floor() * 10 + j])['number']} ${(widget.players[((widget.players.length) / 10).floor() * 10 + j])['name']}"),
                           ]),
                       ],
                     ),
                   ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width / 3.5,
-                  child: Column(
-                    children: [
-                      for (int j = 0; j < widget.players.length % 10; j++)
-                        Row(children: [
-                          Checkbox(
-                            value: selection[
-                                ((widget.players.length) / 10).floor() * 10 +
-                                    j],
-                            activeColor: Colors.green,
-                            onChanged: (bool? value) {
-                              selection[
-                                  ((widget.players.length) / 10).floor() * 10 +
-                                      j] = value!;
-                              setState(() {});
-                            },
-                          ),
-                          Text(
-                              "${(widget.players[((widget.players.length) / 10).floor() * 10 + j])['number']} ${(widget.players[((widget.players.length) / 10).floor() * 10 + j])['name']}"),
-                        ]),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width / 3,
-              height: MediaQuery.of(context).size.height / 10,
-              child: ElevatedButton(
-                onPressed: () {
-                  List<Map<String, dynamic>> toAdd = <Map<String, dynamic>>[];
-                  for (int i = 0; i < selection.length; i++) {
-                    if (selection[i]) {
-                      Map<String, dynamic> element = {
-                        'number': (widget.players[i])['number'],
-                        'name': (widget.players[i])['name'],
-                        'player': (widget.players[i])['player']
-                      };
-                      toAdd.add(element);
-                    }
-                  }
-                  addGame(firstNameController.text.toString(), toAdd ,ownScore :0 ,opponentScore: 0);
-                  Navigator.pop(context);
-                },
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
-                    ),
-                  ),
-                ),
-                child: const Text("voeg toe"),
+                ],
               ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 20,
-            ),
-          ],
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 20,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -188,7 +194,6 @@ Future<void> addGame(
   };
   games.add(toAdd);
   teamsCol.doc('mvc den derde helft').update({'games': games});
-
 
   // to be able to add the game for the player
   /*for(int i = 0; i< selectedPlayers.length;i++){

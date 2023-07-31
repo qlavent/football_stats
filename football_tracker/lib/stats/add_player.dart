@@ -16,107 +16,109 @@ class _AddPlayerPageState extends State<AddPlayerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "Voeg een speler toe",
-              style: TextStyle(
-                fontSize: MediaQuery.of(context).size.width / 15,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 20,
-            ),
-            Text(
-              "Voornaam",
-              style: TextStyle(
-                fontSize: MediaQuery.of(context).size.width / 15,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width / 2,
-              height: MediaQuery.of(context).size.height / 10,
-              child: TextFormField(
-                autofocus: true,
-                controller: firstNameController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  labelText: 'Voornaam',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  contentPadding: const EdgeInsets.all(10),
-                  errorStyle: TextStyle(
-                    fontSize: MediaQuery.of(context).size.width / 25,
-                  ),
-                ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                "Voeg een speler toe",
                 style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.width / 25,
+                  fontSize: MediaQuery.of(context).size.width / 15,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 40,
-            ),
-            Text(
-              "Nummer",
-              style: TextStyle(
-                fontSize: MediaQuery.of(context).size.width / 15,
-                fontWeight: FontWeight.bold,
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 20,
               ),
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width / 2,
-              height: MediaQuery.of(context).size.height / 10,
-              child: TextFormField(
-                autofocus: true,
-                controller: numberController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  contentPadding: const EdgeInsets.all(10),
-                  errorStyle: TextStyle(
-                    fontSize: MediaQuery.of(context).size.width / 25,
-                  ),
-                ),
+              Text(
+                "Voornaam",
                 style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.width / 25,
+                  fontSize: MediaQuery.of(context).size.width / 15,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 20,
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width / 3,
-              height: MediaQuery.of(context).size.height / 10,
-              child: ElevatedButton(
-                onPressed: () {
-                  if (int.tryParse(numberController.text) != null) {
-                    if (int.parse(numberController.text) > 0) {
-                      addPlayer(firstNameController.text.toString(),
-                          int.parse(numberController.text));
-                      Navigator.pop(context);
-                    }
-                  }
-                },
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 2,
+                height: MediaQuery.of(context).size.height / 10,
+                child: TextFormField(
+                  autofocus: true,
+                  controller: firstNameController,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: 'Voornaam',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    contentPadding: const EdgeInsets.all(10),
+                    errorStyle: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width / 25,
                     ),
                   ),
+                  style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width / 25,
+                  ),
                 ),
-                child: const Text("voeg toe"),
               ),
-            ),
-          ],
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 40,
+              ),
+              Text(
+                "Nummer",
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width / 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 2,
+                height: MediaQuery.of(context).size.height / 10,
+                child: TextFormField(
+                  autofocus: true,
+                  controller: numberController,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    contentPadding: const EdgeInsets.all(10),
+                    errorStyle: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width / 25,
+                    ),
+                  ),
+                  style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width / 25,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 20,
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 3,
+                height: MediaQuery.of(context).size.height / 10,
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (int.tryParse(numberController.text) != null) {
+                      if (int.parse(numberController.text) > 0) {
+                        addPlayer(firstNameController.text.toString(),
+                            int.parse(numberController.text));
+                        Navigator.pop(context);
+                      }
+                    }
+                  },
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                    ),
+                  ),
+                  child: const Text("voeg toe"),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

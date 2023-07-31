@@ -151,7 +151,7 @@ class _StatsPageState extends State<StatsPage> {
                                       vertical: 10, horizontal: 20),
                                   child: Center(
                                       child: Text(
-                                    (players[i])['games won'].toString(),
+                                    (players[i])['games lost'].toString(),
                                   ))),
                               Padding(
                                   padding: const EdgeInsets.symmetric(
