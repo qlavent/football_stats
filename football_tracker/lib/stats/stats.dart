@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:football_tracker/stats/add_player.dart';
+import 'package:football_tracker/stats/player_stats.dart';
 
 class StatsPage extends StatefulWidget {
   const StatsPage({super.key});
@@ -24,7 +25,10 @@ class _StatsPageState extends State<StatsPage> {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => const AddPlayerPage()));
         },
-        child: const Icon(Icons.add, color: Colors.white,),
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
       ),
       body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
         stream: FirebaseFirestore.instance
@@ -112,12 +116,23 @@ class _StatsPageState extends State<StatsPage> {
                           for (int i = 0; i < players.length; i++)
                             TableRow(children: [
                               Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 20),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 20),
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                PlayerStatsPage(player: (players[i])['player'])));
+                                  },
                                   child: Center(
-                                      child: Text(
-                                    (players[i])['name'],
-                                  ))),
+                                    child: Text(
+                                      (players[i])['name'],
+                                    ),
+                                  ),
+                                ),
+                              ),
                               Padding(
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 10, horizontal: 20),
