@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:football_tracker/stats/add_player.dart';
+import 'package:football_tracker/stats/goals_stat.dart';
 import 'package:football_tracker/stats/player_stats.dart';
 
 class StatsPage extends StatefulWidget {
@@ -45,7 +47,128 @@ class _StatsPageState extends State<StatsPage> {
             if (data != null) {
               players = data["players"];
 
-              return Scrollbar(
+              return Padding(
+                padding: const EdgeInsets.all(16),
+                child: DataTable2(
+                  columnSpacing: 12,
+                  horizontalMargin: 12,
+                  minWidth: 600,
+                  fixedLeftColumns: 1,
+                  fixedColumnsColor: const Color.fromARGB(255, 247, 199, 199),
+                  columns: [
+                    const DataColumn2(
+                      label: Text('Naam'),
+                    ),
+                    const DataColumn2(
+                      label: Text('Nummer'),
+                      fixedWidth: 70,
+                    ),
+                    DataColumn2(
+                      label: InkWell(
+                        child: const Text(
+                          'Goals',
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Colors.blue,
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const GoalsStatPage()));
+                        },
+                      ),
+                      fixedWidth: 50,
+                    ),
+                    const DataColumn2(
+                      label: Text('Corners'),
+                      fixedWidth: 80,
+                    ),
+                    const DataColumn2(
+                      label: Text('Wedstrijden'),
+                      fixedWidth: 88,
+                    ),
+                    const DataColumn2(
+                      label: Text('Gewonnen wedstrijden'),
+                      fixedWidth: 80,
+                    ),
+                    const DataColumn2(
+                      label: Text('Verloren Wedstrijden'),
+                      fixedWidth: 62,
+                    ),
+                    /*DataColumn2(
+                      label: Text('Corners gescoord'),
+                      fixedWidth: 130,
+                    ),
+                    DataColumn2(
+                      label: Text('Corners gemist'),
+                      fixedWidth: 105,
+                    ),*/
+                  ],
+                  rows: List<DataRow>.generate(
+                    players.length,
+                    (index) => DataRow(
+                      cells: [
+                        DataCell(
+                          Text(
+                            (players[index])['name'],
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PlayerStatsPage(
+                                        player: (players[index])['player'])));
+                          },
+                        ),
+                        DataCell(
+                          Text(
+                            (players[index])['number'].toString(),
+                          ),
+                        ),
+                        DataCell(
+                          Text(
+                            (players[index])['goals'].toString(),
+                          ),
+                        ),
+                        DataCell(
+                          Text(
+                            (players[index])['corners'].toString(),
+                          ),
+                        ),
+                        DataCell(
+                          Text(
+                            (players[index])['games'].toString(),
+                          ),
+                        ),
+                        DataCell(
+                          Text(
+                            (players[index])['games won'].toString(),
+                          ),
+                        ),
+                        DataCell(
+                          Text(
+                            (players[index])['games lost'].toString(),
+                          ),
+                        ),
+                        /*DataCell(
+                          Text(
+                            (players[index])['corners scored'].toString(),
+                          ),
+                        ),
+                        DataCell(
+                          Text(
+                            (players[index])['corners missed'].toString(),
+                          ),
+                        ),*/
+                      ],
+                    ),
+                  ),
+                ),
+              );
+              /*
+              Scrollbar(
                 child: ListView(
                   children: [
                     SingleChildScrollView(
@@ -124,7 +247,9 @@ class _StatsPageState extends State<StatsPage> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                PlayerStatsPage(player: (players[i])['player'])));
+                                                PlayerStatsPage(
+                                                    player: (players[i])[
+                                                        'player'])));
                                   },
                                   child: Center(
                                     child: Text(
@@ -188,7 +313,7 @@ class _StatsPageState extends State<StatsPage> {
                     ),
                   ],
                 ),
-              );
+              );*/
             }
           }
 

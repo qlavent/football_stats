@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:pie_chart/pie_chart.dart';
 
 class PlayerStatsPage extends StatefulWidget {
   final DocumentReference<Map<String, dynamic>> player;
@@ -20,6 +21,8 @@ class _PlayerStatsPageState extends State<PlayerStatsPage> {
   int cornersScored = 0;
   int cornersMissed = 0;
 
+  Map<String, double> gamesMap = {};
+
   Future<void> getPlayerData() async {
     final document = await widget.player.get();
     final data = document.data() as Map<String, dynamic>;
@@ -32,6 +35,11 @@ class _PlayerStatsPageState extends State<PlayerStatsPage> {
     corners = data['corners'];
     cornersScored = data['corners scored'];
     cornersMissed = data['corners missed'];
+
+    gamesMap["gewonnen"] = gamesWon.toDouble();
+    gamesMap["verloren"] = gamesLost.toDouble();
+    gamesMap["gelijk"] = games.toDouble() - gamesLost.toDouble() - gamesWon.toDouble();
+
     setState(() {});
   }
 
@@ -45,17 +53,134 @@ class _PlayerStatsPageState extends State<PlayerStatsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          children: [
-            Icon(Icons.sports_soccer_rounded, size: MediaQuery.of(context).size.width/2.5,),
-            Text(
-              name,
-              style: TextStyle(
-                fontSize: MediaQuery.of(context).size.width / 10,
-                fontWeight: FontWeight.bold,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Icon(
+                Icons.sports_soccer_rounded,
+                size: MediaQuery.of(context).size.width / 2.5,
               ),
-            ),
-          ],
+              Text(
+                name,
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width / 10,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                number.toString(),
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width / 10,
+                ),
+              ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width / 1.3,
+                    child: Text(
+                      "Doelpunten",
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width / 17,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    goals.toString(),
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width / 17,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width / 1.3,
+                    child: Text(
+                      "Cornerdoelpunten",
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width / 17,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    cornersScored.toString(),
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width / 17,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width / 1.3,
+                    child: Text(
+                      "Gespeelde wedstrijden",
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width / 17,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    games.toString(),
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width / 17,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width / 1.3,
+                    child: Text(
+                      "Gewonnen wedstrijden",
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width / 17,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    gamesWon.toString(),
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width / 17,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width / 1.3,
+                    child: Text(
+                      "Verloren wedstrijden",
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width / 17,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    gamesLost.toString(),
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width / 17,
+                    ),
+                  ),
+                ],
+              ),
+              if (gamesMap.isNotEmpty)
+                PieChart(
+                  dataMap: gamesMap,
+                  chartValuesOptions: const ChartValuesOptions(
+                    showChartValueBackground: true,
+                    showChartValues: true,
+                    showChartValuesInPercentage: true,
+                    showChartValuesOutside: false,
+                    decimalPlaces: 1,
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );
