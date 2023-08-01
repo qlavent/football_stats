@@ -99,36 +99,55 @@ class _MatchPageState extends State<MatchPage> {
                                               ),
                                             ),
                                           ),
-                                          const Text("mvc Den Derde Helft"),
+                                          SizedBox(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height /
+                                                15,
+                                            child: Text("mvc Den Derde Helft"),
+                                          ),
                                           if (!finished)
                                             Row(
                                               children: [
                                                 const Spacer(),
-                                                ElevatedButton(
-                                                  onPressed: () async {
-                                                    await ownRemoveScore(
-                                                        widget.game);
-                                                    setState(() {});
-                                                  },
-                                                  child: const Icon(
-                                                      Icons.remove,
-                                                      color: Colors.red),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                      8,
+                                                  child: IconButton(
+                                                    onPressed: () async {
+                                                      await ownRemoveScore(
+                                                          widget.game);
+                                                      setState(() {});
+                                                    },
+                                                    icon: const Icon(
+                                                        Icons.remove,
+                                                        color: Colors.red),
+                                                  ),
                                                 ),
                                                 const Spacer(),
-                                                ElevatedButton(
-                                                  onPressed: () async {
-                                                    showDialog(
-                                                      context: context,
-                                                      builder: (BuildContext
-                                                          context) {
-                                                        return AddGoalPage(
-                                                            players: players,
-                                                            game: widget.game);
-                                                      },
-                                                    );
-                                                  },
-                                                  child: const Icon(Icons.add,
-                                                      color: Colors.green),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                      8,
+                                                  child: IconButton(
+                                                    onPressed: () async {
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                            context) {
+                                                          return AddGoalPage(
+                                                              players: players,
+                                                              game:
+                                                                  widget.game);
+                                                        },
+                                                      );
+                                                    },
+                                                    icon: const Icon(Icons.add,
+                                                        color: Colors.green),
+                                                  ),
                                                 ),
                                                 const Spacer(),
                                               ],
@@ -185,30 +204,48 @@ class _MatchPageState extends State<MatchPage> {
                                               ),
                                             ),
                                           ),
-                                          Text(opponent),
+                                          SizedBox(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height /
+                                                15,
+                                            child: Text(opponent),
+                                          ),
                                           if (!finished)
                                             Row(
                                               children: [
                                                 const Spacer(),
-                                                ElevatedButton(
-                                                  onPressed: () async {
-                                                    await opponentRemoveScore(
-                                                        widget.game);
-                                                    setState(() {});
-                                                  },
-                                                  child: const Icon(
-                                                      Icons.remove,
-                                                      color: Colors.red),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                      8,
+                                                  child: IconButton(
+                                                    onPressed: () async {
+                                                      await opponentRemoveScore(
+                                                          widget.game);
+                                                      setState(() {});
+                                                    },
+                                                    icon: const Icon(
+                                                        Icons.remove,
+                                                        color: Colors.red),
+                                                  ),
                                                 ),
                                                 const Spacer(),
-                                                ElevatedButton(
-                                                  onPressed: () async {
-                                                    await opponentAddScore(
-                                                        widget.game);
-                                                    setState(() {});
-                                                  },
-                                                  child: const Icon(Icons.add,
-                                                      color: Colors.green),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                      8,
+                                                  child: IconButton(
+                                                    onPressed: () async {
+                                                      await opponentAddScore(
+                                                          widget.game);
+                                                      setState(() {});
+                                                    },
+                                                    icon: const Icon(Icons.add,
+                                                        color: Colors.green),
+                                                  ),
                                                 ),
                                                 const Spacer(),
                                               ],
@@ -236,14 +273,26 @@ class _MatchPageState extends State<MatchPage> {
                                       i++)
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width /
-                                          2.5,
+                                          2.2,
                                       child: Column(
                                         children: [
                                           for (int k = 0; k < 5; k++)
                                             Row(
                                               children: [
                                                 Text(
-                                                    "       ${(scorers[5 * i + k])['name']} :  ${"|" * (scorers[5 * i + k])['goals']}"),
+                                                    " ${(scorers[5 * i + k])['name']} : "),
+                                                for (int l = 0;
+                                                    l <
+                                                        (scorers[5 * i + k])[
+                                                            'goals'];
+                                                    l++)
+                                                  Icon(
+                                                    Icons.sports_soccer_rounded,
+                                                    size: MediaQuery.of(context)
+                                                            .size
+                                                            .width /
+                                                        30,
+                                                  ),
                                               ],
                                             ),
                                         ],
@@ -260,7 +309,19 @@ class _MatchPageState extends State<MatchPage> {
                                           Row(
                                             children: [
                                               Text(
-                                                  "       ${(scorers[((scorers.length) / 5).floor() * 5 + j])['name']} :  ${"|" * (scorers[((scorers.length) / 5).floor() * 5 + j])['goals']}"),
+                                                  " ${(scorers[((scorers.length) / 5).floor() * 5 + j])['name']} : "),
+                                              for (int l = 0;
+                                                    l <
+                                                        (scorers[((scorers.length) / 5).floor() * 5 + j])[
+                                                            'goals'];
+                                                    l++)
+                                                  Icon(
+                                                    Icons.sports_soccer_rounded,
+                                                    size: MediaQuery.of(context)
+                                                            .size
+                                                            .width /
+                                                        30,
+                                                  ),
                                             ],
                                           ),
                                       ],

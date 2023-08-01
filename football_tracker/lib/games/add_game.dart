@@ -22,36 +22,6 @@ class _AddGamePageState extends State<AddGamePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: SizedBox(
-        width: MediaQuery.of(context).size.width / 3,
-        height: MediaQuery.of(context).size.height / 10,
-        child: ElevatedButton(
-          onPressed: () {
-            List<Map<String, dynamic>> toAdd = <Map<String, dynamic>>[];
-            for (int i = 0; i < selection.length; i++) {
-              if (selection[i]) {
-                Map<String, dynamic> element = {
-                  'number': (widget.players[i])['number'],
-                  'name': (widget.players[i])['name'],
-                  'player': (widget.players[i])['player']
-                };
-                toAdd.add(element);
-              }
-            }
-            addGame(firstNameController.text.toString(), toAdd,
-                ownScore: 0, opponentScore: 0);
-            Navigator.pop(context);
-          },
-          style: ButtonStyle(
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18.0),
-              ),
-            ),
-          ),
-          child: const Text("voeg toe"),
-        ),
-      ),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -101,7 +71,83 @@ class _AddGamePageState extends State<AddGamePage> {
                 height: MediaQuery.of(context).size.height / 60,
               ),
               const Text("Selecteer spelers"),
+              for (int i = 0; i < ((widget.players.length) / 2).floor(); i++)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Spacer(),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 2.5,
+                      child: Row(
+                        children: [
+                          Checkbox(
+                            value: selection[2 * i],
+                            activeColor: Colors.green,
+                            onChanged: (bool? value) {
+                              selection[2 * i] = value!;
+                              setState(() {});
+                            },
+                          ),
+                          Text(
+                              "${(widget.players[2 * i])['number']} ${(widget.players[2 * i])['name']}"),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 2.5,
+                      child: Row(
+                        children: [
+                          Checkbox(
+                            value: selection[2 * i+1],
+                            activeColor: Colors.green,
+                            onChanged: (bool? value) {
+                              selection[2 * i+1] = value!;
+                              setState(() {});
+                            },
+                          ),
+                          Text(
+                              "${(widget.players[2 * i + 1])['number']} ${(widget.players[2 * i + 1])['name']}"),
+                        ],
+                      ),
+                    ),
+                    const Spacer(),
+                  ],
+                ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Spacer(),
+                  for (int j = 0; j < widget.players.length % 2; j++)
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 2.5,
+                      child: Row(
+                        children: [
+                          Checkbox(
+                            value: selection[
+                                ((widget.players.length) / 2).floor() * 2 + j],
+                            activeColor: Colors.green,
+                            onChanged: (bool? value) {
+                              selection[
+                                  ((widget.players.length) / 2).floor() * 2 +
+                                      j] = value!;
+                              setState(() {});
+                            },
+                          ),
+                          Text(
+                              "${(widget.players[((widget.players.length) / 2).floor() * 2 + j])['number']} ${(widget.players[((widget.players.length) / 2).floor() * 2 + j])['name']}"),
+                        ],
+                      ),
+                    ),
+                  for (int j = 0; j < 2 - widget.players.length % 2; j++)
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 2.5,
+                    ),
+                  const Spacer(),
+                ],
+              ),
+              /*Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -154,6 +200,36 @@ class _AddGamePageState extends State<AddGamePage> {
                     ),
                   ),
                 ],
+              ),*/
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 3,
+                height: MediaQuery.of(context).size.height / 10,
+                child: ElevatedButton(
+                  onPressed: () {
+                    List<Map<String, dynamic>> toAdd = <Map<String, dynamic>>[];
+                    for (int i = 0; i < selection.length; i++) {
+                      if (selection[i]) {
+                        Map<String, dynamic> element = {
+                          'number': (widget.players[i])['number'],
+                          'name': (widget.players[i])['name'],
+                          'player': (widget.players[i])['player']
+                        };
+                        toAdd.add(element);
+                      }
+                    }
+                    addGame(firstNameController.text.toString(), toAdd,
+                        ownScore: 0, opponentScore: 0);
+                    Navigator.pop(context);
+                  },
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                    ),
+                  ),
+                  child: const Text("voeg toe"),
+                ),
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 20,

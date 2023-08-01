@@ -58,6 +58,7 @@ class _StatsPageState extends State<StatsPage> {
                   columns: [
                     const DataColumn2(
                       label: Text('Naam'),
+                      fixedWidth: 80,
                     ),
                     const DataColumn2(
                       label: Text('Nummer'),

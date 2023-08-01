@@ -27,119 +27,214 @@ class _AddGoalPageState extends State<AddGoalPage> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(32.0)),
-      ),
-      contentPadding: const EdgeInsets.only(top: 10.0),
-      content: SizedBox(
-        width: MediaQuery.of(context).size.width / 1.3,
-        height: MediaQuery.of(context).size.height / 1.3,
-        child: 
-        Column(
-          children: <Widget>[
-            const Text("doelpunt toevoegen"),
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 20,
-            ),
-            const Text("type doelpunt"),
-            ToggleButtons(
-              direction: Axis.horizontal,
-              onPressed: (int index) {
-                setState(() {
-                  // The button that is tapped is set to true, and the others to false.
-                  for (int i = 0; i < goalType.length; i++) {
-                    goalType[i] = i == index;
-                  }
-                });
-              },
-              borderRadius: const BorderRadius.all(Radius.circular(8)),
-              selectedBorderColor: Colors.red,
-              selectedColor: Colors.white,
-              fillColor: Colors.redAccent,
-              color: Colors.black,
-              constraints: const BoxConstraints(
-                minHeight: 40.0,
-                minWidth: 80.0,
+    return Center(
+      child: AlertDialog(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(32.0)),
+        ),
+        contentPadding: const EdgeInsets.only(top: 10.0),
+        content: SizedBox(
+          width: MediaQuery.of(context).size.width / 1.1,
+          height: MediaQuery.of(context).size.height / 1.5,
+          child: ListView(
+            children: <Widget>[
+              const Center(
+                child: Text("doelpunt toevoegen"),
               ),
-              isSelected: goalType,
-              children: goalTypes,
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 20,
-            ),
-            const Text("doelpuntenmaker"),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                for (int i = 0; i < ((widget.players.length) / 6).floor(); i++)
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width / 3.5,
-                    child: Column(
-                      children: [
-                        for (int k = 0; k < 6; k++)
-                          Row(children: [
-                            Checkbox(
-                              value: scorer[6 * i + k],
-                              activeColor: Colors.green,
-                              onChanged: (bool? value) {
-                                scorer = List.filled(scorer.length, false,
-                                    growable: true);
-                                scorer[6 * i + k] = value!;
-                                setState(() {});
-                              },
-                            ),
-                            Text(
-                                "${(widget.players[6 * i + k])['number']} ${(widget.players[6 * i + k])['name']}"),
-                          ]),
-                      ],
-                    ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 20,
+              ),
+              const Center(
+                child: Text("type doelpunt"),
+              ),
+              Center(
+                child: ToggleButtons(
+                  direction: Axis.horizontal,
+                  onPressed: (int index) {
+                    setState(() {
+                      // The button that is tapped is set to true, and the others to false.
+                      for (int i = 0; i < goalType.length; i++) {
+                        goalType[i] = i == index;
+                      }
+                    });
+                  },
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  selectedBorderColor: Colors.red,
+                  selectedColor: Colors.white,
+                  fillColor: Colors.redAccent,
+                  color: Colors.black,
+                  constraints: const BoxConstraints(
+                    minHeight: 40.0,
+                    minWidth: 80.0,
                   ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width / 3.5,
-                  child: Column(
-                    children: [
-                      for (int j = 0; j < widget.players.length % 6; j++)
-                        Row(children: [
+                  isSelected: goalType,
+                  children: goalTypes,
+                ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 20,
+              ),
+              const Center(
+                child: Text("doelpuntenmaker"),
+              ),
+              for (int i = 0; i < ((widget.players.length) / 2).floor(); i++)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Spacer(),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 2.8,
+                      child: Row(
+                        children: [
                           Checkbox(
-                            value: scorer[
-                                ((widget.players.length) / 6).floor() * 6 + j],
+                            value: scorer[2 * i],
                             activeColor: Colors.green,
                             onChanged: (bool? value) {
                               scorer = List.filled(scorer.length, false,
                                   growable: true);
-                              scorer[((widget.players.length) / 6).floor() * 6 +
+                              scorer[2 * i] = value!;
+                              setState(() {});
+                            },
+                          ),
+                          Text(
+                              "${(widget.players[2 * i])['number']} ${(widget.players[2 * i])['name']}"),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 2.8,
+                      child: Row(
+                        children: [
+                          Checkbox(
+                            value: scorer[2 * i + 1],
+                            activeColor: Colors.green,
+                            onChanged: (bool? value) {
+                              scorer = List.filled(scorer.length, false,
+                                  growable: true);
+                              scorer[2 * i + 1] = value!;
+                              setState(() {});
+                            },
+                          ),
+                          Text(
+                              "${(widget.players[2 * i + 1])['number']} ${(widget.players[2 * i + 1])['name']}"),
+                        ],
+                      ),
+                    ),
+                    const Spacer(),
+                  ],
+                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Spacer(),
+                  for (int j = 0; j < widget.players.length % 2; j++)
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 2.8,
+                      child: Row(
+                        children: [
+                          Checkbox(
+                            value: scorer[
+                                ((widget.players.length) / 2).floor() * 2 + j],
+                            activeColor: Colors.green,
+                            onChanged: (bool? value) {
+                              scorer = List.filled(scorer.length, false,
+                                  growable: true);
+                              scorer[((widget.players.length) / 2).floor() * 2 +
                                   j] = value!;
                               setState(() {});
                             },
                           ),
                           Text(
-                              "${(widget.players[((widget.players.length) / 6).floor() * 6 + j])['number']} ${(widget.players[((widget.players.length) / 6).floor() * 6 + j])['name']}"),
-                        ]),
-                    ],
+                              "${(widget.players[((widget.players.length) / 2).floor() * 2 + j])['number']} ${(widget.players[((widget.players.length) / 2).floor() * 2 + j])['name']}"),
+                        ],
+                      ),
+                    ),
+                  for (int j = 0; j < 2 - widget.players.length % 2; j++)
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 2.8,
+                    ),
+                  const Spacer(),
+                ],
+              ),
+
+              /*Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (int i = 0;
+                      i < ((widget.players.length) / 6).floor();
+                      i++)
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 2.7,
+                      child: Column(
+                        children: [
+                          for (int k = 0; k < 6; k++)
+                            Row(children: [
+                              Checkbox(
+                                value: scorer[6 * i + k],
+                                activeColor: Colors.green,
+                                onChanged: (bool? value) {
+                                  scorer = List.filled(scorer.length, false,
+                                      growable: true);
+                                  scorer[6 * i + k] = value!;
+                                  setState(() {});
+                                },
+                              ),
+                              Text(
+                                  "${(widget.players[6 * i + k])['number']} ${(widget.players[6 * i + k])['name']}"),
+                            ]),
+                        ],
+                      ),
+                    ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width / 2.7,
+                    child: Column(
+                      children: [
+                        for (int j = 0; j < widget.players.length % 6; j++)
+                          Row(children: [
+                            Checkbox(
+                              value: scorer[
+                                  ((widget.players.length) / 6).floor() * 6 +
+                                      j],
+                              activeColor: Colors.green,
+                              onChanged: (bool? value) {
+                                scorer = List.filled(scorer.length, false,
+                                    growable: true);
+                                scorer[
+                                    ((widget.players.length) / 6).floor() * 6 +
+                                        j] = value!;
+                                setState(() {});
+                              },
+                            ),
+                            Text(
+                                "${(widget.players[((widget.players.length) / 6).floor() * 6 + j])['number']} ${(widget.players[((widget.players.length) / 6).floor() * 6 + j])['name']}"),
+                          ]),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const Spacer(),
-            ElevatedButton(
-              onPressed: () async {
-                int location = scorer.indexWhere((player) => player == true);
-                Map<String, dynamic> player = widget.players[location];
-                ownAddScore(
-                  widget.game,
-                  player,
-                  goalType[1],
-                );
-                Navigator.pop(context);
-              },
-              child: const Text("Voeg doelpunt toe"),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 20,
-            ),
-          ],
+                ],
+              ),*/
+              const Spacer(),
+              ElevatedButton(
+                onPressed: () async {
+                  int location = scorer.indexWhere((player) => player == true);
+                  Map<String, dynamic> player = widget.players[location];
+                  ownAddScore(
+                    widget.game,
+                    player,
+                    goalType[1],
+                  );
+                  Navigator.pop(context);
+                },
+                child: const Text("Voeg doelpunt toe"),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 20,
+              ),
+            ],
+          ),
         ),
       ),
     );
