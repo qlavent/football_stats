@@ -90,7 +90,7 @@ class _GamesPageState extends State<GamesPage> {
                                           ),
                                         ),
                                       ),
-                                      const Text("mvc Den Derde Helft"),
+                                      const Text("Mvc Den Derde Helft"),
                                     ],
                                   ),
                                 ),

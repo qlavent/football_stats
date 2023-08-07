@@ -104,7 +104,7 @@ class _MatchPageState extends State<MatchPage> {
                                                     .size
                                                     .height /
                                                 15,
-                                            child: Text("mvc Den Derde Helft"),
+                                            child: const Text("Mvc Den Derde Helft"),
                                           ),
                                           if (!finished)
                                             Row(
