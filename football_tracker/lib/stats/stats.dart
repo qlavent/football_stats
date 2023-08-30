@@ -98,6 +98,10 @@ class _StatsPageState extends State<StatsPage> {
                       label: Text('Verloren Wedstrijden'),
                       fixedWidth: 62,
                     ),
+                    const DataColumn2(
+                      label: Text('Pannas'),
+                      fixedWidth: 62,
+                    ),
                     /*DataColumn2(
                       label: Text('Corners gescoord'),
                       fixedWidth: 130,
@@ -151,6 +155,11 @@ class _StatsPageState extends State<StatsPage> {
                         DataCell(
                           Text(
                             (players[index])['games lost'].toString(),
+                          ),
+                        ),
+                        DataCell(
+                          Text(
+                            (players[index])['pannas'].toString(),
                           ),
                         ),
                         /*DataCell(

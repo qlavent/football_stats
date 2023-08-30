@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:football_tracker/games/add_goal.dart';
+import 'package:football_tracker/games/add_panna.dart';
+import 'package:unicons/unicons.dart';
 
 class MatchPage extends StatefulWidget {
   final DocumentReference<Map<String, dynamic>> game;
@@ -16,6 +18,7 @@ class _MatchPageState extends State<MatchPage> {
   int opponentScore = 0;
   List<dynamic> players = [];
   List<dynamic> scorers = [];
+  List<dynamic> pannas = [];
   bool finished = true;
   @override
   Widget build(BuildContext context) {
@@ -36,357 +39,636 @@ class _MatchPageState extends State<MatchPage> {
               opponentScore = data["opponent score"];
               players = data["players"];
               scorers = data["scorers"];
-              return Column(
+              pannas = data["pannas"];
+              return Stack(
                 children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height / 40,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Card(
-                        child: SizedBox(
-                          height: MediaQuery.of(context).size.height / 1.9,
-                          width: MediaQuery.of(context).size.width / 1.05,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                  SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                          minHeight: MediaQuery.of(context).size.height),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height / 40,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SizedBox(
-                                height: MediaQuery.of(context).size.height / 25,
-                              ),
-                              SizedBox(
-                                height: MediaQuery.of(context).size.height / 4,
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width /
-                                          20,
-                                    ),
-                                    SizedBox(
-                                      width:
-                                          MediaQuery.of(context).size.width / 3,
-                                      child: Column(
-                                        children: [
-                                          SizedBox(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                80,
-                                          ),
-                                          Container(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                6,
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                6,
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: Theme.of(context)
-                                                    .primaryColorDark,
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    300,
-                                              ),
-                                              shape: BoxShape.circle,
-                                              image: const DecorationImage(
-                                                image: AssetImage(
-                                                    "images/logo.png"),
-                                                fit: BoxFit.cover,
-                                              ),
+                              Card(
+                                child: SizedBox(
+                                  height: MediaQuery.of(context).size.height /
+                                          2.38 +
+                                      MediaQuery.of(context).size.height /
+                                          32 *
+                                          scorers.length +
+                                      MediaQuery.of(context).size.height /
+                                          32 *
+                                          pannas.length,
+                                  width:
+                                      MediaQuery.of(context).size.width / 1.05,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                25,
+                                      ),
+                                      SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                4,
+                                        child: Row(
+                                          children: [
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  20,
                                             ),
-                                          ),
-                                          SizedBox(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                15,
-                                            child: const Text("Mvc Den Derde Helft"),
-                                          ),
-                                          if (!finished)
-                                            Row(
-                                              children: [
-                                                const Spacer(),
-                                                SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      8,
-                                                  child: IconButton(
-                                                    onPressed: () async {
-                                                      await ownRemoveScore(
-                                                          widget.game);
-                                                      setState(() {});
-                                                    },
-                                                    icon: const Icon(
-                                                        Icons.remove,
-                                                        color: Colors.red),
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  3,
+                                              child: Column(
+                                                children: [
+                                                  SizedBox(
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height /
+                                                            80,
                                                   ),
-                                                ),
-                                                const Spacer(),
-                                                SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      8,
-                                                  child: IconButton(
-                                                    onPressed: () async {
-                                                      showDialog(
-                                                        context: context,
-                                                        builder: (BuildContext
-                                                            context) {
-                                                          return AddGoalPage(
-                                                              players: players,
-                                                              game:
+                                                  Container(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width /
+                                                            6,
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width /
+                                                            6,
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                        color: Theme.of(context)
+                                                            .primaryColorDark,
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width /
+                                                            300,
+                                                      ),
+                                                      shape: BoxShape.circle,
+                                                      image:
+                                                          const DecorationImage(
+                                                        image: AssetImage(
+                                                            "images/logo.png"),
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height /
+                                                            50,
+                                                  ),
+                                                  SizedBox(
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height /
+                                                            25,
+                                                    child: const Text(
+                                                        "Mvc Den Derde Helft"),
+                                                  ),
+                                                  if (!finished)
+                                                    Row(
+                                                      children: [
+                                                        SizedBox(
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width /
+                                                              8,
+                                                          child: IconButton(
+                                                            onPressed:
+                                                                () async {
+                                                              await ownRemoveScore(
                                                                   widget.game);
-                                                        },
-                                                      );
-                                                    },
-                                                    icon: const Icon(Icons.add,
-                                                        color: Colors.green),
+                                                              setState(() {});
+                                                            },
+                                                            icon: const Icon(
+                                                                Icons.remove,
+                                                                color:
+                                                                    Colors.red),
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width /
+                                                              8,
+                                                          child: IconButton(
+                                                            onPressed:
+                                                                () async {
+                                                              showDialog(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (BuildContext
+                                                                        context) {
+                                                                  return AddGoalPage(
+                                                                      players:
+                                                                          players,
+                                                                      game: widget
+                                                                          .game);
+                                                                },
+                                                              );
+                                                            },
+                                                            icon: const Icon(
+                                                                Icons.add,
+                                                                color: Colors
+                                                                    .green),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                ],
+                                              ),
+                                            ),
+                                            Column(
+                                              children: [
+                                                SizedBox(
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height /
+                                                      25,
+                                                ),
+                                                Text(
+                                                  "$ownScore - $opponentScore",
+                                                  style: TextStyle(
+                                                    fontSize:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width /
+                                                            15,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
                                                   ),
                                                 ),
-                                                const Spacer(),
                                               ],
                                             ),
-                                        ],
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  3,
+                                              child: Column(
+                                                children: [
+                                                  SizedBox(
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height /
+                                                            80,
+                                                  ),
+                                                  Container(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width /
+                                                            6,
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width /
+                                                            6,
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                        color: Theme.of(context)
+                                                            .primaryColorDark,
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width /
+                                                            300,
+                                                      ),
+                                                      shape: BoxShape.circle,
+                                                      image:
+                                                          const DecorationImage(
+                                                        image: AssetImage(
+                                                            "images/logo.png"),
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height /
+                                                            50,
+                                                  ),
+                                                  SizedBox(
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height /
+                                                            25,
+                                                    child: Text(opponent),
+                                                  ),
+                                                  if (!finished)
+                                                    Row(
+                                                      children: [
+                                                        SizedBox(
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width /
+                                                              8,
+                                                          child: IconButton(
+                                                            onPressed:
+                                                                () async {
+                                                              await opponentRemoveScore(
+                                                                  widget.game);
+                                                              setState(() {});
+                                                            },
+                                                            icon: const Icon(
+                                                                Icons.remove,
+                                                                color:
+                                                                    Colors.red),
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width /
+                                                              8,
+                                                          child: IconButton(
+                                                            onPressed:
+                                                                () async {
+                                                              await opponentAddScore(
+                                                                  widget.game);
+                                                              setState(() {});
+                                                            },
+                                                            icon: const Icon(
+                                                                Icons.add,
+                                                                color: Colors
+                                                                    .green),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  20,
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    const Spacer(),
-                                    Text(
-                                      "$ownScore - $opponentScore",
-                                      style: TextStyle(
-                                        fontSize:
-                                            MediaQuery.of(context).size.width /
-                                                15,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
+                                      SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                60,
                                       ),
-                                    ),
-                                    const Spacer(),
-                                    SizedBox(
-                                      width:
-                                          MediaQuery.of(context).size.width / 3,
-                                      child: Column(
+                                      Text(
+                                        "    Scorers:",
+                                        style: TextStyle(
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              28,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      //test of new format
+                                      for (int i = 0; i < scorers.length; i++)
+                                        Row(
+                                          children: [
+                                            Text(" ${(scorers[i])['name']} : "),
+                                            for (int l = 0;
+                                                l < (scorers[i])['goals'];
+                                                l++)
+                                              Icon(
+                                                Icons.sports_soccer_rounded,
+                                                size: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    30,
+                                              ),
+                                          ],
+                                        ),
+
+                                      /*Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
+                                          for (int i = 0;
+                                              i <
+                                                  ((scorers.length) / 5)
+                                                      .floor();
+                                              i++)
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  2.2,
+                                              child: Column(
+                                                children: [
+                                                  for (int k = 0; k < 5; k++)
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                            " ${(scorers[5 * i + k])['name']} : "),
+                                                        for (int l = 0;
+                                                            l <
+                                                                (scorers[5 * i +
+                                                                        k])[
+                                                                    'goals'];
+                                                            l++)
+                                                          Icon(
+                                                            Icons
+                                                                .sports_soccer_rounded,
+                                                            size: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width /
+                                                                30,
+                                                          ),
+                                                      ],
+                                                    ),
+                                                ],
+                                              ),
+                                            ),
                                           SizedBox(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                80,
-                                          ),
-                                          Container(
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width /
-                                                6,
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                6,
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: Theme.of(context)
-                                                    .primaryColorDark,
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    300,
-                                              ),
-                                              shape: BoxShape.circle,
-                                              image: const DecorationImage(
-                                                image: AssetImage(
-                                                    "images/logo.png"),
-                                                fit: BoxFit.cover,
-                                              ),
+                                                2.5,
+                                            child: Column(
+                                              children: [
+                                                for (int j = 0;
+                                                    j < scorers.length % 5;
+                                                    j++)
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                          " ${(scorers[((scorers.length) / 5).floor() * 5 + j])['name']} : "),
+                                                      for (int l = 0;
+                                                          l <
+                                                              (scorers[((scorers.length) /
+                                                                              5)
+                                                                          .floor() *
+                                                                      5 +
+                                                                  j])['goals'];
+                                                          l++)
+                                                        Icon(
+                                                          Icons
+                                                              .sports_soccer_rounded,
+                                                          size: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width /
+                                                              30,
+                                                        ),
+                                                    ],
+                                                  ),
+                                              ],
                                             ),
                                           ),
-                                          SizedBox(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                15,
-                                            child: Text(opponent),
+                                        ],
+                                      ),*/
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "    Pannas:",
+                                            style: TextStyle(
+                                              fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  28,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,
+                                            ),
                                           ),
                                           if (!finished)
-                                            Row(
-                                              children: [
-                                                const Spacer(),
-                                                SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      8,
-                                                  child: IconButton(
-                                                    onPressed: () async {
-                                                      await opponentRemoveScore(
-                                                          widget.game);
-                                                      setState(() {});
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  8,
+                                              child: IconButton(
+                                                onPressed: () async {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return AddPannaPage(
+                                                          players: players,
+                                                          game: widget.game);
                                                     },
-                                                    icon: const Icon(
-                                                        Icons.remove,
-                                                        color: Colors.red),
-                                                  ),
-                                                ),
-                                                const Spacer(),
-                                                SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      8,
-                                                  child: IconButton(
-                                                    onPressed: () async {
-                                                      await opponentAddScore(
-                                                          widget.game);
-                                                      setState(() {});
-                                                    },
-                                                    icon: const Icon(Icons.add,
-                                                        color: Colors.green),
-                                                  ),
-                                                ),
-                                                const Spacer(),
-                                              ],
+                                                  );
+                                                },
+                                                icon: const Icon(
+                                                    UniconsLine.archway,
+                                                    color: Colors.green),
+                                              ),
                                             ),
                                         ],
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width /
-                                          20,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: MediaQuery.of(context).size.height / 60,
-                              ),
-                              const Text("    Scorers:"),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  for (int i = 0;
-                                      i < ((scorers.length) / 5).floor();
-                                      i++)
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width /
-                                          2.2,
-                                      child: Column(
+
+                                      //test of new format
+                                      for (int i = 0; i < pannas.length; i++)
+                                        Row(
+                                          children: [
+                                            Text(" ${(pannas[i])['name']} : "),
+                                            for (int l = 0;
+                                                l < (pannas[i])['pannas'];
+                                                l++)
+                                              Icon(
+                                                UniconsLine.archway,
+                                                size: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    30,
+                                              ),
+                                          ],
+                                        ),
+
+                                      /*
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          for (int k = 0; k < 5; k++)
-                                            Row(
+                                          for (int i = 0;
+                                              i < ((pannas.length) / 5).floor();
+                                              i++)
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  2.2,
+                                              child: Column(
+                                                children: [
+                                                  for (int k = 0; k < 5; k++)
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                            " ${(pannas[5 * i + k])['name']} : "),
+                                                        for (int l = 0;
+                                                            l <
+                                                                (pannas[5 * i +
+                                                                        k])[
+                                                                    'pannas'];
+                                                            l++)
+                                                          Icon(
+                                                            UniconsLine.camera,
+                                                            size: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width /
+                                                                30,
+                                                          ),
+                                                      ],
+                                                    ),
+                                                ],
+                                              ),
+                                            ),
+                                          SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                2.5,
+                                            child: Column(
                                               children: [
-                                                Text(
-                                                    " ${(scorers[5 * i + k])['name']} : "),
-                                                for (int l = 0;
-                                                    l <
-                                                        (scorers[5 * i + k])[
-                                                            'goals'];
-                                                    l++)
-                                                  Icon(
-                                                    Icons.sports_soccer_rounded,
-                                                    size: MediaQuery.of(context)
-                                                            .size
-                                                            .width /
-                                                        30,
+                                                for (int j = 0;
+                                                    j < pannas.length % 5;
+                                                    j++)
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                          " ${(pannas[((pannas.length) / 5).floor() * 5 + j])['name']} : "),
+                                                      for (int l = 0;
+                                                          l <
+                                                              (pannas[((pannas.length) /
+                                                                              5)
+                                                                          .floor() *
+                                                                      5 +
+                                                                  j])['pannas'];
+                                                          l++)
+                                                        Icon(
+                                                          UniconsLine.camera,
+                                                          size: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width /
+                                                              30,
+                                                        ),
+                                                    ],
                                                   ),
                                               ],
                                             ),
-                                        ],
-                                      ),
-                                    ),
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 2.5,
-                                    child: Column(
-                                      children: [
-                                        for (int j = 0;
-                                            j < scorers.length % 5;
-                                            j++)
-                                          Row(
-                                            children: [
-                                              Text(
-                                                  " ${(scorers[((scorers.length) / 5).floor() * 5 + j])['name']} : "),
-                                              for (int l = 0;
-                                                    l <
-                                                        (scorers[((scorers.length) / 5).floor() * 5 + j])[
-                                                            'goals'];
-                                                    l++)
-                                                  Icon(
-                                                    Icons.sports_soccer_rounded,
-                                                    size: MediaQuery.of(context)
-                                                            .size
-                                                            .width /
-                                                        30,
-                                                  ),
-                                            ],
                                           ),
-                                      ],
-                                    ),
+                                        ],
+                                      ),*/
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
                             ],
                           ),
-                        ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height / 40,
+                          ),
+                          const Text("Selectie: "),
+                          for (int i = 0;
+                              i < ((players.length) / 3).floor();
+                              i++)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width / 3.6,
+                                  child: Text("${(players[3 * i])['name']}"),
+                                ),
+                                SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width / 3.6,
+                                    child: Text(
+                                        "${(players[3 * i + 1])['name']}")),
+                                SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width / 3.6,
+                                    child: Text(
+                                        "${(players[3 * i + 2])['name']}")),
+                              ],
+                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              for (int j = 0; j < players.length % 3; j++)
+                                SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width / 3.6,
+                                    child: Text(
+                                        "${(players[((players.length) / 3).floor() * 3 + j])['name']}")),
+                              for (int j = 0; j < 3 - players.length % 3; j++)
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width / 3.6,
+                                ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height / 4,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height / 40,
-                  ),
-                  const Text("Selectie: "),
-                  for (int i = 0; i < ((players.length) / 3).floor(); i++)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Spacer(),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width / 3.6,
-                          child: Text("${(players[3 * i])['name']}"),
-                        ),
-                        SizedBox(
-                            width: MediaQuery.of(context).size.width / 3.6,
-                            child: Text("${(players[3 * i + 1])['name']}")),
-                        SizedBox(
-                            width: MediaQuery.of(context).size.width / 3.6,
-                            child: Text("${(players[3 * i + 2])['name']}")),
-                        const Spacer(),
-                      ],
                     ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Spacer(),
-                      for (int j = 0; j < players.length % 3; j++)
-                        SizedBox(
-                            width: MediaQuery.of(context).size.width / 3.6,
-                            child: Text(
-                                "${(players[((players.length) / 3).floor() * 3 + j])['name']}")),
-                      for (int j = 0; j < 3 - players.length % 3; j++)
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width / 3.6,
-                        ),
-                      const Spacer(),
-                    ],
                   ),
-                  const Spacer(),
-                  if (!finished)
-                    ElevatedButton(
-                      onPressed: () async {
-                        await finishGame(widget.game);
-                        setState(() {});
+                  Container(
+                    alignment: const Alignment(-0.97, -0.95),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
                       },
-                      child: const Text("Wedstrijd beëindigen"),
+                      child: const Icon(
+                        Icons.undo,
+                      ),
                     ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height / 20,
                   ),
+                  if (!finished)
+                    Container(
+                      alignment: Alignment.bottomCenter,//const Alignment(-0.97, -0.95),
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          await finishGame(widget.game);
+                          setState(() {});
+                        },
+                        child: const Text("Wedstrijd beëindigen"),
+                      ),
+                    ),
                 ],
               );
             }

@@ -255,6 +255,7 @@ Future<void> addGame(
     'opponent score': opponentScore,
     'players': selectedPlayers,
     'scorers': <Map<String, dynamic>>[],
+    'pannas': <Map<String, dynamic>>[],
   });
 
   CollectionReference teamsCol = FirebaseFirestore.instance.collection('teams');

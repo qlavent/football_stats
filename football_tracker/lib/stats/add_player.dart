@@ -132,7 +132,8 @@ Future<void> addPlayer(String name, int number,
     int gamesLost = 0,
     int corners = 0,
     int cornersScored = 0,
-    int cornersMissed = 0}) async {
+    int cornersMissed = 0,
+    int pannas = 0,}) async {
   CollectionReference playersCol =
       FirebaseFirestore.instance.collection('players');
 
@@ -147,6 +148,7 @@ Future<void> addPlayer(String name, int number,
     'corners': corners,
     'corners scored': cornersScored,
     'corners missed': cornersMissed,
+    'pannas': pannas,
   });
 
   CollectionReference teamsCol = FirebaseFirestore.instance.collection('teams');
@@ -163,6 +165,7 @@ Future<void> addPlayer(String name, int number,
     'corners': corners,
     'corners scored': cornersScored,
     'corners missed': cornersMissed,
+    'pannas' : pannas,
     'player': newDoc,
   };
   players.add(toAdd);
